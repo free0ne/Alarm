@@ -73,8 +73,6 @@ public class AnalogClock : MonoBehaviour
 
     public void SetTimeFromHoursRotation(TimeOfDay timeToSet, float rotation, bool morning)
     {
-        //init state
-
         if (rotation == 360f) rotation = 0; //just to be safe
 
         float partedHours = rotation / hoursToDegrees;

@@ -66,7 +66,7 @@ public class AppManager : MonoBehaviour
     private void ReloadClocks(TimeOfDay newTime)
     {
         _time = newTime;
-        Debug.Log($"Reloaded: {_time}");
+        //Debug.Log($"Reloaded: {_time}");
     }
 
     private void OnApplicationPause(bool pause)
