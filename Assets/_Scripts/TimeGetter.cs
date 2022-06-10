@@ -16,6 +16,8 @@ public class TimeGetter
     private Regex _timeRegex;
     private TimeOfDay _time;
 
+    private bool _anotherProviderDied; //hotfix for internet errors
+
     public static event Action<TimeOfDay> OnTimeReceived;
 
     public TimeGetter (TimeSpan utcOffset, AppManager manager)
@@ -28,6 +30,8 @@ public class TimeGetter
 
     public void GetInternetTime()
     {
+        _anotherProviderDied = false; //hotfix for internet errors
+
         _time.Unset();
         _manager.StartCoroutine(TryGetApiTime(timeApi1));
         _manager.StartCoroutine(TryGetApiTime(timeApi2));
@@ -52,6 +56,15 @@ public class TimeGetter
                         _time.SetNewTime(int.Parse(timeParts[0]) + _utcOffset.Hours, int.Parse(timeParts[1]) + _utcOffset.Minutes, int.Parse(timeParts[2]));
                         OnTimeReceived?.Invoke(_time);
                     }
+                }
+            }
+            else //hotfix for internet errors
+            {
+                if (!_anotherProviderDied) _anotherProviderDied = true;
+                else
+                {
+                    _time.SetNewTime(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                    OnTimeReceived?.Invoke(_time);
                 }
             }
         }
