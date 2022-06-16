@@ -10,13 +10,14 @@ public class AnalogClock : MonoBehaviour
     [SerializeField] private RectTransform _minuteArrow;
     [SerializeField] private RectTransform _secondsArrow;
 
-    private const float hoursToDegrees = 360f / 12f;
-    private const float minutesToDegrees = 360f / 60f;
-    private const float secondsToDegrees = 360f / 60f;
+    private const float hoursToDegrees = 30f; // 360 degrees / 12 hours
+    private const float minutesToDegrees = 6f; // 360 degrees / 60 minutes;
+    private const float secondsToDegrees = 6f; // 360 degrees / 60 seconds;
+    private const float digitsRadius = 0.38f; // manually found value for proper appearance
 
     private void Awake()
     {
-        SetDigitsPosition(0.38f);
+        SetDigitsPosition(digitsRadius);
     }
 
     private void SetDigitsPosition(float radius)

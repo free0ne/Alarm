@@ -76,7 +76,7 @@ public class TimeOfDay
     private bool _set;
     public bool IsSet => _set;
 
-    public float HoursParted { get { return Mathf.Repeat((float)TimeInSeconds / 3600f, 24f); } }
+    public float HoursParted { get { return Mathf.Repeat((float)TimeInSeconds / secondsInHour, 24f); } }
     public int Hours { get { return Mathf.FloorToInt(HoursParted); } }
 
     public float MinutesParted { get { return Mathf.Repeat((float)TimeInSeconds / 60f, 60f); } }
@@ -88,6 +88,8 @@ public class TimeOfDay
     public double TimeInSeconds { get; private set; }
 
     private string format = "00";
+    private const int secondsInHour = 3600;
+    public const int secondsInDay = 86400;
 
     public TimeOfDay(int hours, int minutes, int seconds)
     {
@@ -102,13 +104,13 @@ public class TimeOfDay
     public void SetNewTime(int hours, int minutes, int seconds)
     {
         _set = true;
-        TimeInSeconds = hours * 60 * 60 + minutes * 60 + seconds;
+        TimeInSeconds = hours * secondsInHour + minutes * 60 + seconds;
     }
 
     public void AddSeconds(float seconds)
     {
         TimeInSeconds += seconds;
-        if (TimeInSeconds > 86400) TimeInSeconds -= 86400;
+        if (TimeInSeconds > secondsInDay) TimeInSeconds -= secondsInDay;
     }
 
     public override string ToString()

@@ -10,7 +10,9 @@ public class AppManager : MonoBehaviour
 
     private TimeGetter _timeGetter;
     private TimeOfDay _time;
-    private const float recheckPeriod = 60 * 60; // resync every hour
+    private const float recheckPeriod = 3600f; // resync every hour (60 min * 60 sec)
+    private const int secondsInHour = 3600;
+
     private bool _editingAlarm;
 
     private float _pausedTime = -1;
@@ -21,7 +23,7 @@ public class AppManager : MonoBehaviour
     private void Awake()
     {
     #if UNITY_EDITOR
-        QualitySettings.vSyncCount = 0;  // VSync must be disabled
+        QualitySettings.vSyncCount = 0;
         Application.targetFrameRate = 60;
     #endif
     }
@@ -114,7 +116,7 @@ public class AppManager : MonoBehaviour
         {
             _alarm.ChangeAlarmButtonImage(true);
             _alarmSet = true;
-            _alarmSeconds = Storage.GetSavedHours() * 3600 + Storage.GetSavedMinutes() * 60;
+            _alarmSeconds = Storage.GetSavedHours() * secondsInHour + Storage.GetSavedMinutes() * 60;
         }
         else
         {
